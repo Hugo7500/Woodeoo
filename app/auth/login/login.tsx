@@ -1,51 +1,45 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import Input from "../../components/Input";   // composant Input réutilisable
-import Button from "../../components/Button"; // composant Button réutilisable
+import Input from "../../components/Input";
+import Button from "../../components/Button";
 import styles from "../../styles/auth.module.css";
 
-const RegisterPage: React.FC = () => {
+const LoginPage: React.FC = () => {
   const router = useRouter();
-  // États locaux pour les champs du formulaire et les messages d'erreur
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  // Si l'utilisateur vient de s'inscrire, on peut afficher un message de succès via la query string
+  const registered = router.query.registered;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
-
-    // Validation côté client avant l'envoi
     if (!email || !password) {
-      setError("Veuillez remplir tous les champs requis.");
-      return;
-    }
-    if (password !== confirmPassword) {
-      setError("Les mots de passe ne correspondent pas.");
+      setError("Veuillez indiquer votre email et votre mot de passe.");
       return;
     }
     setLoading(true);
     try {
-      // Appel de l'API d'inscription
-      const res = await fetch("/api/auth/register", {
+      const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
       const data = await res.json();
       if (!res.ok) {
-        // Affiche le message d'erreur renvoyé par l'API (ex: email déjà pris)
-        setError(data.error || "Inscription échouée. Veuillez réessayer.");
+        setError(data.error || "Identifiants invalides.");
       } else {
-        // Inscription réussie : redirige vers la page de connexion
-        router.push("/auth/login?registered=1");
+        // Connexion réussie : on peut stocker le token (via utils/auth) et rediriger
+        // Par exemple, stocker le token dans un cookie HTTP-only côté serveur pour la sécurité
+        router.push("/");  // redirection vers page d'accueil ou tableau de bord
       }
     } catch (err) {
       console.error("Erreur réseau :", err);
-      setError("Une erreur est survenue. Veuillez réessayer plus tard.");
+      setError("Impossible de se connecter. Veuillez vérifier votre connexion.");
     } finally {
       setLoading(false);
     }
@@ -53,7 +47,9 @@ const RegisterPage: React.FC = () => {
 
   return (
     <div className={styles.authContainer}>
-      <h1>Inscription</h1>
+      <h1>Connexion</h1>
+      {/* Message de confirmation si inscription récente */}
+      {registered && <p className={styles.info} role="status">Votre compte a été créé avec succès, veuillez vous connecter.</p>}
       {error && <p className={styles.error} role="alert">{error}</p>}
       <form className={styles.authForm} onSubmit={handleSubmit} noValidate>
         <Input 
@@ -71,25 +67,19 @@ const RegisterPage: React.FC = () => {
           value={password} 
           onChange={(e) => setPassword(e.target.value)} 
           required 
-          minLength={6}
-        />
-        <Input 
-          label="Confirmer le mot de passe" 
-          type="password" 
-          name="confirmPassword" 
-          value={confirmPassword} 
-          onChange={(e) => setConfirmPassword(e.target.value)} 
-          required 
         />
         <Button type="submit" disabled={loading}>
-          {loading ? "Inscription..." : "Créer mon compte"}
+          {loading ? "Connexion..." : "Se connecter"}
         </Button>
       </form>
       <p className={styles.switchAuth}>
-        Déjà un compte ? <Link href="/auth/login">Connexion</Link>
+        <Link href="/auth/forgot-password">Mot de passe oublié ?</Link>
+      </p>
+      <p className={styles.switchAuth}>
+        Pas de compte ? <Link href="/auth/register">Inscription</Link>
       </p>
     </div>
   );
 };
 
-export default RegisterPage;
+export default LoginPage;

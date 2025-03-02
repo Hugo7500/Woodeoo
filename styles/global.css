@@ -1,0 +1,92 @@
+/* Réinitialisation de base pour harmoniser le rendu entre navigateurs */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Styles globaux */
+  html {
+    font-size: 16px; /* base for rem units */
+    scroll-behavior: smooth;
+  }
+  body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    background-color: #f9f9f9;
+    color: #333;
+  }
+  
+  /* Couleurs et thèmes globaux (exemple de variables CSS) */
+  :root {
+    --color-primary: #1976d2;   /* Bleu principal (par exemple pour boutons, liens) */
+    --color-primary-dark: #115293;
+    --color-secondary: #9C27B0; /* Violet secondaire, si utilisé */
+    --color-error: #d32f2f;
+    --color-success: #2e7d32;
+  }
+  
+  /* Liens globaux */
+  a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Titres - hiérarchie */
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+  }
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+  /* (h3-h6 can be defined similarly if needed) */
+  
+  /* Formulaires - champs et boutons par défaut */
+  input, button, select, textarea {
+    font-family: inherit;
+    font-size: 1rem;
+  }
+  input, select, textarea {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  input:focus, select:focus, textarea:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 1px;
+  }
+  
+  /* Bouton principal par défaut */
+  button {
+    background-color: var(--color-primary);
+    color: #fff;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+  }
+  button:disabled {
+    background-color: #90caf9; /* bleu clair désactivé */
+    cursor: not-allowed;
+  }
+  button:hover:enabled {
+    background-color: var(--color-primary-dark);
+  }
+  
+  /* Classes utilitaires (exemple) */
+  .text-center {
+    text-align: center;
+  }
+  .mt-1 { margin-top: 0.25rem; }
+  .mt-2 { margin-top: 0.5rem; }
+  .mt-3 { margin-top: 1rem; }
+  /* etc. pour d'autres espacements utilitaires */

@@ -1,126 +1,59 @@
-/* =====================
-   auth.module.css
-   ===================== */
-
-/* Exemple : on retire le sélecteur global `button { ... }` 
-   et on crée une classe .btnGlobal si on veut l'appliquer à 
-   tous les boutons, ou on déclare :global(button).
-*/
-
-/* --- OPTION 1 : classe locale .main-button --- */
-.main-button {
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-/* 
-   Ainsi, pour les boutons que tu veux styliser, tu fais :
-   <button className={styles["main-button"]}>Mon bouton</button>
-*/
-
-/* --- OPTION 2 : cibler explicitement le sélecteur global --- */
-/* :global(button) {
-  cursor: pointer;
-  transition: background 0.3s;
-} */
-
-/* 
-   Si tu veux vraiment cibler *tous* les <button> du document,
-   tu peux décommenter ce bloc. Cela dit, c'est du global,
-   donc ça agit comme un style "classique" (non scoping).
-*/
-
-/* =====================
-   Container + Card
-   ===================== */
-
-/* Remplace .register-container { ... } 
-   par une classe locale, par exemple : */
-
-.register-container {
-  min-height: 100vh;
-  background: #F1E3C6;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: "Roboto", sans-serif;
-}
-
-/* Idem pour la "register-card" */
-.register-card {
-  background: white;
-  width: 100%;
-  max-width: 28rem;
+/* Styles de container pour centrer le formulaire sur la page */
+.authContainer {
+  max-width: 400px;
+  margin: 2rem auto;
   padding: 2rem;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+/* Style du formulaire en colonne */
+.authForm {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Espacement uniforme entre les champs du formulaire */
+.authForm > * + * {
+  margin-top: 1rem;
+}
+
+/* Message d'erreur standard pour tous les formulaires d'auth */
+.error {
+  color: #d32f2f;  /* rouge pour les erreurs, contraste sur fond blanc */
+  background-color: #fddede;  /* léger fond rose pour signaler l'erreur */
+  padding: 0.75rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+/* Message d'information/succès */
+.info {
+  color: #2e7d32;  /* vert foncé pour info/succès */
+  background-color: #dff0d8;
+  padding: 0.75rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+.success {
+  /* On peut utiliser la même base que .info pour succès, éventuellement une teinte différente */
+  color: #2e7d32;
+  background-color: #dff0d8;
+  padding: 0.75rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+/* Style pour le texte de bas de formulaire proposant un changement de page (connexion <-> inscription, etc.) */
+.switchAuth {
   text-align: center;
+  margin-top: 1rem;
 }
-
-/* =====================
-   Inputs
-   ===================== */
-
-/* Remplace .input-style { ... } par : */
-.input-style {
-  width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 12px;
-  font-size: 1.1rem;
-  outline: none;
-  transition: border 0.2s;
-  color: #2E2E2E;
+.switchAuth a {
+  color: #1976d2; /* bleu lien */
+  text-decoration: none;
 }
-
-/* Sur focus */
-.input-style:focus {
-  border-color: #E6B04C;
+.switchAuth a:hover {
+  text-decoration: underline;
 }
-
-/* =====================
-   Autres classes locales
-   ===================== */
-
-/* 
-   Si tu avais .register-card button:first-child, 
-   tu ne peux pas faire ça directement en module 
-   car c'est un sélecteur global. 
-   Soit tu utilises :global(.register-card button:first-child),
-   soit tu crées des classes plus ciblées 
-   (ex. .btn-particulier, .btn-professionnel).
-*/
-
-/* Exemple de classe .btn-particulier */
-.btn-particulier {
-  background: #E6B04C;
-  color: white;
-  font-weight: bold;
-  padding: 12px;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  transition: background 0.3s;
-}
-
-/* Sur hover */
-.btn-particulier:hover {
-  background: #f0c46e;
-}
-
-/* Exemple de classe .btn-professionnel */
-.btn-professionnel {
-  background: #5E3D07;
-  color: white;
-  font-weight: bold;
-  padding: 12px;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  transition: background 0.3s;
-}
-
-.btn-professionnel:hover {
-  background: #7F5A0A;
-}
-
-/* Etc. pour .back-button ou .btn-primary, 
-   selon la logique que tu veux. */
